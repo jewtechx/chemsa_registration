@@ -7,7 +7,20 @@ export interface IDb {
   UserModel: IUserModel;
 }
 
-export const InitDB = async (config: Config["db"]) => {
+export default async function InitDB (config: Config["db"]) : Promise<IDb> {
   try {
-  } catch (e) {}
+    await connect(config.uri)
+    console.log("Database connected")
+
+
+      await UserModel.createCollection()
+
+      return {
+        UserModel
+      }
+    
+  } catch (e) {
+    throw e
+  }
+
 };
