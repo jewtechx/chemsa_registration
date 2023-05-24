@@ -8,7 +8,7 @@ export default class UserService extends IService {
 
    async CreateOne(input: IUserInput): Promise<IUser> {
     try {
-      const _user = await this.db.UserModel.find({
+      const _user = await this.db.UserModel.findOne({
         email: input.email,
       });
 
