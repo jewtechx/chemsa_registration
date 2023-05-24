@@ -4,11 +4,22 @@ import bcrypt from "bcrypt";
 
 const UserSchema = new Schema<IUserSchema>(
   {
-    fullname: SchemaTypes.String,
-    email: SchemaTypes.String,
-    password: SchemaTypes.String,
+    fullname: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+    email: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+
+    password: {
+      type: SchemaTypes.String,
+      required: true,
+    },
     role: {
       type: SchemaTypes.String,
+      required: true,
       enum: ["PRESIDENT", "VICE-PRESIDENT", "GEN-SEC", "ORGANIZING-SEC"],
     },
   },
@@ -31,9 +42,6 @@ UserSchema.methods.comparePasswords = async function (hash: string) {
   return await bcrypt.compare(hash, this.password);
 };
 
-const UserModel: IUserModel = model<IUserSchema, IUserModel>(
-  "User",
-  UserSchema
-);
+const UserModel = model<IUserSchema, IUserModel>("User", UserSchema);
 
 export default UserModel;
