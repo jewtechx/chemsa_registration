@@ -1,13 +1,12 @@
-import production from "./production"
-import development from "./development"
 import dotenv from "dotenv";
-dotenv.config();
+import development from "./development";
+import production from "./production";
 
 export interface Config {
   app: {
-    env : "development" | "test" | "production"
-    port: number;
     name: string;
+    env: "production" | "development" | "test";
+    port: string | number;
   };
 
   db: {
@@ -15,8 +14,16 @@ export interface Config {
   };
   auth: {
     secret: string;
+    token_expiry: string;
+  };
+  mail: {
+    key: string;
+    domain: string;
+    username: string;
   };
 }
 
+const config =
+  process.env.NODE_ENV === "development" ? development : production;
 
-export const config : Config = process.env.NODE_ENV === "production" ? production : development
+export default config;

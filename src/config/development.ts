@@ -1,19 +1,25 @@
 import dotenv from "dotenv";
-import { Config } from ".";
 dotenv.config();
+import { Config } from ".";
 
 const config: Config = {
   app: {
+    name: "accreditation software",
+    port: 8080,
     env: "development",
-    name: "physag-reg-server",
-    port: 5000,
   },
   auth: {
-    secret: process.env.JWT_SECRET || "00606060",
+    secret: process.env.JWT_SECRET,
+    token_expiry: process.env.TOKEN_EXPIRY,
   },
   db: {
-    uri: process.env.DEV_MONGO_URI || "",
+    uri: process.env.DEV_MONGO_URI,
+  },
+  mail: {
+    username: process.env.MAILGUN_USERNAME || "",
+    key: process.env.MAILGUN_API_KEY || "",
+    domain: process.env.MAIL_DOMAIN || "",
   },
 };
 
-export default config
+export default config;

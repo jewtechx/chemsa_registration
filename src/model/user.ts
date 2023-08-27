@@ -20,7 +20,13 @@ const UserSchema = new Schema<IUserSchema>(
     role: {
       type: SchemaTypes.String,
       required: true,
-      enum: ["PRESIDENT", "VICE-PRESIDENT", "GEN-SEC", "ORGANIZING-SEC"],
+      enum: [
+        "PRESIDENT",
+        "VICE_PRESIDENT",
+        "GEN_SEC",
+        "ORGANIZING_SEC",
+        "SUDO_ADMIN",
+      ],
     },
   },
   { timestamps: true }

@@ -1,26 +1,30 @@
-import mongoose, { connect } from "mongoose";
-import UserModel from "./user.model";
+import { connect } from "mongoose";
 import { Config } from "../config";
-import { IUserModel } from "../types/user";
+import userModel from "./user";
+import studentModel from "./student";
+import registrationModel from "./registration";
 
 export interface IDb {
-  UserModel: IUserModel;
+  userModel: typeof userModel;
+  studentModel: typeof studentModel;
+  registrationModel: typeof registrationModel;
 }
 
-export default async function InitDB (config: Config["db"]) : Promise<IDb> {
+export default async function initDB(config: Config["db"]): Promise<IDb> {
   try {
-    await connect(config.uri)
-    console.log("Database connected")
+    await connect(config.uri, { autoIndex: true });
+    console.log("DB connected");
 
+    await userModel.createCollection();
+    await studentModel.createCollection();
+    await registrationModel.createCollection();
 
-      await UserModel.createCollection()
-
-      return {
-        UserModel
-      }
-    
+    return {
+      userModel,
+      studentModel,
+      registrationModel,
+    };
   } catch (e) {
-    throw e
+    throw e;
   }
-
-};
+}

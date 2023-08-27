@@ -4,7 +4,12 @@ export interface IUser {
   fullname: string;
   email: string;
   password: string;
-  role: "PRESIDENT" | "VICE-PRESIDENT" | "GEN-SEC" | "ORGANIZING-SEC";
+  role:
+    | "PRESIDENT"
+    | "VICE_PRESIDENT"
+    | "GEN_SEC"
+    | "ORGANIZING_SEC"
+    | "SUDO_ADMIN";
 }
 
 export interface IUserAuth {

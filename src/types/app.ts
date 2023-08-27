@@ -1,14 +1,13 @@
 import { IDb } from "../model";
 import { IServices } from "../services";
-
 export interface IAppContext {
   db?: IDb;
   services?: IServices;
 }
 
-export class IService {
+export default class IService {
   db: IDb;
   constructor(context: IAppContext) {
-    this.db = context.db!;
+    this.db = context.db;
   }
 }

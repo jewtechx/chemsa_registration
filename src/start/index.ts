@@ -1,37 +1,45 @@
-import express, { NextFunction, Request, Response } from "express";
-import customError from "../middlewares/customError";
-const app = express();
-import authRouter from "../routes/user";
-import { Config } from "../config";
-import { IAppContext } from "../types/app";
-import InitDB from "../model";
-import initServices from "../services";
+"use strict";
 
-export const start = async (config: Config) => {
+import { Config } from "../config";
+import express from "express";
+import initGraph from "../graphql";
+import { IAppContext } from "../types/app";
+import cors from "cors";
+import { json } from "body-parser";
+import { expressMiddleware } from "@apollo/server/express4";
+
+import initServices from "../services";
+import initDb from "../model";
+import { setContext } from "../middlewares/context";
+import { GraphQLError } from "graphql";
+import { verifyAccessToken } from "../utils/token";
+
+export default async function start(config: Config) {
   try {
-    app.use(express.json());
+    const appContext: IAppContext = {};
+    appContext.db = await initDb(config.db);
+    appContext.services = await initServices(appContext);
+    const graph = initGraph(appContext);
+
+    await graph.start();
+    const app = express();
     app.use(express.urlencoded({ extended: true }));
 
-    const appContext: IAppContext = {};
-
-    appContext.db = await InitDB(config.db);
-
-    appContext.services = await initServices(appContext);
-
-    app.use((req: Request, res: Response, next: NextFunction) => {
-      req.context = appContext; // Set the appContext on the request object
-      next();
-    });
-    //use routes
-    app.use("/auth", authRouter);
-
-    //use custom error middleware
-    app.use(customError);
+    app.use(
+      "/graphql",
+      cors<cors.CorsRequest>(),
+      json(),
+      expressMiddleware(graph, {
+        context: setContext,
+      })
+    );
 
     app.listen(config.app.port, () => {
-      console.log(`🚀 server is running on ${config.app.port}`);
+      console.log(
+        `🚀  Server ready at http://localhost:${config.app.port}/graphql`
+      );
     });
-  } catch (e) {
-    throw e;
+  } catch (err) {
+    console.error(err);
   }
-};
+}
