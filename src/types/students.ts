@@ -5,10 +5,10 @@ import { IRegistration } from "./registration";
 export interface IStudent {
   fullName: string;
   email: string;
+  studentID: string;
   programme: string;
   level: number;
   phone: string;
-  registration: PopulatedDoc<IRegistration>;
   createdBy: PopulatedDoc<IUser>;
 }
 
@@ -17,5 +17,7 @@ export interface IStudentSchema extends IStudent, Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ICreateStudentInput extends IStudent {}
 
 export interface IStudentModel extends Model<IStudentSchema> {}

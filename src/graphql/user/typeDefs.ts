@@ -1,8 +1,16 @@
-import { gql } from 'graphql-tag';
+import { gql } from "graphql-tag";
 
 const typeDefs = gql`
   extend type Query {
     user(id: ID!): User
+  }
+
+  enum Role {
+    PRESIDENT
+    VICE_PRESIDENT
+    GEN_SEC
+    ORGANIZING_SEC
+    SUDO_ADMIN
   }
 
   extend type Mutation {
@@ -16,7 +24,8 @@ const typeDefs = gql`
     _id: ID!
     email: String!
     fullname: String!
-    phone: String!
+    password: String!
+    role: Role
   }
 
   input DeleteUserInput {
@@ -28,6 +37,7 @@ const typeDefs = gql`
     email: String!
     phone: String!
     password: String!
+    role: Role!
   }
 
   input UpdateUserInput {

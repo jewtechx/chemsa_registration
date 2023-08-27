@@ -10,7 +10,7 @@ const config: Config = {
   },
   auth: {
     secret: process.env.JWT_SECRET,
-    token_expiry: process.env.TOKEN_EXPIRY,
+    token_expiry: "1d",
   },
   db: {
     uri: process.env.DEV_MONGO_URI,

@@ -1,5 +1,5 @@
 import IService, { IAppContext } from "../types/app";
-import { IAuthUser, IUser } from "../types/user";
+import { IUserAuth, IUser } from "../types/user";
 import { _generateToken } from "../utils/token";
 
 export default class UserService extends IService {
@@ -7,7 +7,7 @@ export default class UserService extends IService {
     super(props);
   }
 
-  async createOne({ input }, {}): Promise<IAuthUser> {
+  async createOne({ input }, {}): Promise<IUserAuth> {
     try {
       const _user = await this.db.userModel.find({ email: input.email });
 
@@ -31,7 +31,7 @@ export default class UserService extends IService {
     }
   }
 
-  async login({ input }, {}): Promise<IAuthUser> {
+  async login({ input }, {}): Promise<IUserAuth> {
     try {
       const user = await this.db.userModel.findOne({ email: input.email });
 
@@ -82,15 +82,13 @@ export default class UserService extends IService {
     }
   }
 
-  async deleteOne({ input }, { context }: { context: any }): Promise<IUser> {
+  async deleteOne({ input }, { user }): Promise<IUser> {
     try {
-      if (!context.user) {
-        throw new Error("Not authenticated");
-      }
+      if (!user) throw new Error("Unauthorized");
 
-      const user = await this.db.userModel.findByIdAndDelete(input.userId);
-      if (!user) throw new Error("User Not Found");
-      return user;
+      const _user = await this.db.userModel.findByIdAndDelete(input.userId);
+      if (!_user) throw new Error("User Not Found");
+      return _user;
     } catch (err) {
       throw err;
     }

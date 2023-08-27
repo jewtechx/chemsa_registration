@@ -6,44 +6,48 @@ var validateEmail = function (email: string) {
   return re.test(email);
 };
 
-const studentSchema = new Schema<IStudentSchema>({
-  fullName: {
-    type: SchemaTypes.String,
-    required: true,
+const studentSchema = new Schema<IStudentSchema>(
+  {
+    fullName: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+    email: {
+      type: SchemaTypes.String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      unique: true,
+      validate: [validateEmail, "Please fill a valid email address"],
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Please fill a valid email address",
+      ],
+    },
+    programme: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+    studentID: {
+      type: SchemaTypes.String,
+      required: true,
+      unique: true,
+    },
+    level: {
+      type: SchemaTypes.Number,
+      required: true,
+    },
+    phone: {
+      type: SchemaTypes.String,
+      required: true,
+    },
+    createdBy: {
+      type: SchemaTypes.ObjectId,
+      required: true,
+    },
   },
-  email: {
-    type: SchemaTypes.String,
-    required: true,
-    trim: true,
-    lowercase: true,
-    unique: true,
-    validate: [validateEmail, "Please fill a valid email address"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please fill a valid email address",
-    ],
-  },
-  programme: {
-    type: SchemaTypes.String,
-    required: true,
-  },
-  level: {
-    type: SchemaTypes.Number,
-    required: true,
-  },
-  phone: {
-    type: SchemaTypes.String,
-    required: true,
-  },
-  registration: {
-    type: SchemaTypes.ObjectId,
-    required: true,
-  },
-  createdBy: {
-    type: SchemaTypes.ObjectId,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 const StudentModel = model<IStudentSchema, IStudentModel>(
   "Student",

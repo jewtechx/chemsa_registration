@@ -4,6 +4,9 @@ import { ApolloServer } from "@apollo/server";
 
 import { IAppContext } from "../types/app";
 import userSchema from "./user";
+import rootSchema from "./root";
+import studentSchema from "./student";
+import registrationSchema from "./registration";
 import { formatError } from "../middlewares/error";
 
 interface MyContext {
@@ -12,7 +15,12 @@ interface MyContext {
 }
 
 export default function initGraph(appContext: IAppContext): ApolloServer {
-  const schema = buildSubgraphSchema([userSchema(appContext)]);
+  const schema = buildSubgraphSchema([
+    rootSchema(appContext),
+    userSchema(appContext),
+    studentSchema(appContext),
+    registrationSchema(appContext),
+  ]);
 
   const graph = new ApolloServer<MyContext>({
     schema,
