@@ -96,7 +96,6 @@ export default class StudentService extends IService {
       throw e;
     }
   }
-
   async getOne({ filter, search, populate }, { user }) {
     try {
       if (!user) throw new Error("Unauthorized");
@@ -118,6 +117,67 @@ export default class StudentService extends IService {
       }
 
       return student;
+    } catch (e) {
+      throw e;
+    }
+  }
+  async countLevel100({ filter }, { user }) {
+    console.log(filter);
+
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const count = await this.db.studentModel.countDocuments({
+        year: filter.year.eq,
+        level: 100,
+      });
+
+      return count;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async countLevel200({ filter }, { user }) {
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const count = await this.db.studentModel.countDocuments({
+        year: filter.year.eq,
+        level: 200,
+      });
+
+      return count;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async countLevel300({ filter }, { user }) {
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const count = await this.db.studentModel.countDocuments({
+        year: filter.year.eq,
+        level: 300,
+      });
+
+      return count;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async countLevel400({ filter }, { user }) {
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const count = await this.db.studentModel.countDocuments({
+        year: filter.year.eq,
+        level: 400,
+      });
+
+      return count;
     } catch (e) {
       throw e;
     }

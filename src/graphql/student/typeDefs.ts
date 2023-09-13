@@ -6,7 +6,7 @@ const typeDefs = gql`
     year: StringOperator
   }
 
-  extend type Query {
+  type Query {
     Student(
       filter: StudentFilter!
       search: SearchOperator
@@ -18,6 +18,10 @@ const typeDefs = gql`
       populate: [String]
       pagination: Pagination!
     ): [Student]
+    CountLevel100(filter: StudentFilter!): Int
+    CountLevel200(filter: StudentFilter!): Int
+    CountLevel300(filter: StudentFilter!): Int
+    CountLevel400(filter: StudentFilter!): Int
   }
 
   extend type Mutation {
