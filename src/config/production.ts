@@ -4,7 +4,7 @@ import { Config } from ".";
 
 const config: Config = {
   app: {
-    name: "accreditation software",
+    name: "PHYSAG-UG",
     port: process.env.PORT,
     env: "production",
   },

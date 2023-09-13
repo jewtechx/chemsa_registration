@@ -6,6 +6,16 @@ const typeDefs = gql`
     REG_AND_SOUVENIERS
   }
 
+  enum paymentMethod {
+    CASH
+    MOBILE_MONEY
+  }
+
+  enum souvenierStatus {
+    COLLECTED_ALL
+    COLLECTED_SOME
+  }
+
   input RegistrationFilter {
     _id: IdOperator
     year: StringOperator
@@ -15,13 +25,29 @@ const typeDefs = gql`
     type: RegistrationType
     souveniers: [String]
     amount: String
+    paymentMethod: paymentMethod
+    balance: String
+    souveniersCollected: [String]
+    souveniersStatus: souvenierStatus
   }
 
   input RegistrationDetails {
+    type: RegistrationType!
+    souveniers: [String]
+    amount: String!
+    paymentMethod: paymentMethod!
+    balance: String!
+    souveniersCollected: [String]
+  }
+
+  input UpdateRegistrationDetails {
+    registrationId: ID!
     type: RegistrationType
-    year: String
     souveniers: [String]
     amount: String
+    paymentMethod: paymentMethod
+    balance: String
+    souveniersCollected: [String]
   }
 
   type Registration @key(fields: "_id") {
@@ -36,12 +62,11 @@ const typeDefs = gql`
   input CreateRegistrationInput {
     student: CreateStudentInput!
     registrationDetails: RegistrationDetails!
-    year: String!
   }
 
   input UpdateRegistrationDetailsInput {
-    registrationId: ID!
-    registrationDetails: RegistrationDetails
+    student: UpdateStudentInput
+    registrationDetails: UpdateRegistrationDetails
     year: String
   }
 

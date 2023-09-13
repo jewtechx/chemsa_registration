@@ -7,7 +7,7 @@ export default class StudentService extends IService {
     super(context);
   }
 
-  async createOne(input: ICreateStudentInput, { user }) {
+  async createOne(input: ICreateStudentInput, { user }, session) {
     try {
       if (!user) throw new Error("Unauthorized");
 
@@ -19,43 +19,48 @@ export default class StudentService extends IService {
 
       const student = new this.db.studentModel({
         ...input,
+        year: "2023-2024",
         createdBy: user._id,
       });
-      await student.save();
+      await student.save({ session });
       return student;
     } catch (e) {
       throw e;
     }
   }
-  async updateOne({ input }, { user }) {
+  async updateOne(input, { user }, session) {
     try {
+      console.log("STUDENT_INPUT", input);
+
       if (!user) throw new Error("Unauthorized");
 
-      console.log(JSON.stringify(input));
-
       const _student = await this.db.studentModel.findOne({
-        studentID: input.studentID,
+        _id: input.studentObjectID,
       });
 
       if (!_student) throw new Error("Student does not Exist");
 
-      await _student.updateOne({
-        $set: {
-          ...input,
-          updatedBy: user._id,
+      await _student.updateOne(
+        {
+          $set: {
+            ...input,
+            updatedBy: user._id,
+          },
         },
-      });
+        { session }
+      );
       return "Student Updated Successfully";
     } catch (e) {
       throw e;
     }
   }
-  async deleteOne({ input }, { user }) {
+  async deleteOne({ input }, { user }, session) {
     try {
       if (!user) throw new Error("Unauthorized");
 
       const student = await this.db.studentModel.findByIdAndDelete(
-        input.studentID
+        input.studentID,
+        { session }
       );
       if (!student) throw new Error("student Not Found");
       return user;

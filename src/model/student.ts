@@ -41,6 +41,10 @@ const studentSchema = new Schema<IStudentSchema>(
       type: SchemaTypes.String,
       required: true,
     },
+    year: {
+      type: SchemaTypes.String,
+      required: true,
+    },
     createdBy: {
       type: SchemaTypes.ObjectId,
       required: true,

@@ -3,7 +3,7 @@ import { gql } from "graphql-tag";
 const typeDefs = gql`
   input StudentFilter {
     _id: IdOperator
-    title: StringOperator
+    year: StringOperator
   }
 
   extend type Query {
@@ -44,7 +44,8 @@ const typeDefs = gql`
   }
 
   input UpdateStudentInput {
-    studentID: String!
+    studentObjectID: ID!
+    studentID: String
     email: String
     fullName: String
     phone: String

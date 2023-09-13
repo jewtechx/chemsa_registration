@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { IAppContext } from "../../types/app";
 
 export default function (appContext: IAppContext) {
@@ -22,43 +23,100 @@ export default function (appContext: IAppContext) {
       createRegistration: async (_, args, context, info) => {
         console.log(args);
         console.log(context);
+        let session = null;
 
-        const _student = await appContext.services.student.createOne(
-          { ...args.input.student },
-          { ...context }
-        );
-        const registration = await appContext.services.registration.createOne(
-          { ...args.input, student: _student._id },
-          { ...context }
-        );
-        console.log("Registration: " + registration);
+        try {
+          session = await mongoose.startSession();
+          session.startTransaction();
 
-        return registration;
+          const _student = await appContext.services.student.createOne(
+            { ...args.input.student },
+            { ...context },
+            session
+          );
+          const registration = await appContext.services.registration.createOne(
+            { ...args.input, student: _student._id },
+            { ...context },
+            session
+          );
+
+          await session.commitTransaction();
+          session.endSession();
+          console.log("Registration: " + registration);
+
+          return registration;
+        } catch (e) {
+          if (session) {
+            await session.abortTransaction();
+            session.endSession();
+          }
+          throw e;
+        }
       },
 
       updateRegistrationDetails: async (_, args, context, info) => {
         console.log(args);
+        let session = null;
 
-        const response = await appContext.services.registration.updateOne(
-          { ...args.input },
-          { ...context }
-        );
-        return response;
+        try {
+          session = await mongoose.startSession();
+          session.startTransaction();
+
+          await appContext.services.student.updateOne(
+            { ...args.input.student },
+            { ...context },
+            session
+          );
+
+          const response = await appContext.services.registration.updateOne(
+            { ...args.input.registrationDetails },
+            { ...context },
+            session
+          );
+
+          await session.commitTransaction();
+          session.endSession();
+          console.log("Registration: " + response);
+          return response;
+        } catch (e) {
+          if (session) {
+            await session.abortTransaction();
+            session.endSession();
+          }
+          throw e;
+        }
       },
 
       deleteRegistration: async (_, args, context, info) => {
         console.log(args);
+        let session = null;
+        try {
+          session = await mongoose.startSession();
+          session.startTransaction();
 
-        const deletedDoc = await appContext.services.registration.deleteOne(
-          { ...args },
-          { ...context }
-        );
+          const deletedDoc = await appContext.services.registration.deleteOne(
+            { ...args },
+            { ...context },
+            session
+          );
 
-        await appContext.services.student.deleteOne(
-          { ...args },
-          { ...context }
-        );
-        return deletedDoc;
+          await appContext.services.student.deleteOne(
+            { ...args },
+            { ...context },
+            session
+          );
+
+          await session.commitTransaction();
+          session.endSession();
+          console.log("Deleted Doc: " + deletedDoc);
+          return deletedDoc;
+        } catch (e) {
+          if (session) {
+            await session.abortTransaction();
+            session.endSession();
+          }
+          throw e;
+        }
       },
     },
   };

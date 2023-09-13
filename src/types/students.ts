@@ -9,6 +9,7 @@ export interface IStudent {
   programme: string;
   level: number;
   phone: string;
+  year: string;
   createdBy: PopulatedDoc<IUser>;
 }
 

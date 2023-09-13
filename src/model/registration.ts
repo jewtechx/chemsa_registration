@@ -25,8 +25,27 @@ const registrationSchema = new Schema<IRegistrationSchema>(
           type: SchemaTypes.String,
           required: true,
         },
+        paymentMethod: {
+          type: SchemaTypes.String,
+          required: true,
+          enum: ["CASH", "MOBILE_MONEY"],
+        },
+        balance: {
+          type: SchemaTypes.String,
+          required: true,
+        },
+        souveniersCollected: {
+          type: [SchemaTypes.String],
+          required: function () {
+            return this.type === "REG_AND_SOUVENIERS";
+          },
+        },
+        souveniersStatus: {
+          type: SchemaTypes.String,
+          enum: ["COLLECTED_ALL", "COLLECTED_SOME"],
+          required: true,
+        },
       }),
-      required: true,
     },
     year: {
       type: SchemaTypes.String,

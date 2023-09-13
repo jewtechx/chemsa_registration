@@ -21,10 +21,12 @@ export default function (appContext: IAppContext) {
     Mutation: {
       updateStudent: async (_, args, context, info) => {
         console.log(args);
+        let session = null;
 
         const response = await appContext.services.student.updateOne(
-          { ...args },
-          { ...context }
+          { ...args.input },
+          { ...context },
+          session
         );
         return response;
       },
