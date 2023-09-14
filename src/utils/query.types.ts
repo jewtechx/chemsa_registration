@@ -50,3 +50,8 @@ export interface GenerateQueryOutputProps {
   skip: number;
   limit: number;
 }
+
+export enum SearchOperatorOption {
+  CaseInsensitive = "i",
+  MultiLine = "m",
+}

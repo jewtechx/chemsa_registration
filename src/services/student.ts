@@ -121,6 +121,7 @@ export default class StudentService extends IService {
       throw e;
     }
   }
+
   async countLevel100({ filter }, { user }) {
     console.log(filter);
 
