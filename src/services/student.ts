@@ -13,6 +13,7 @@ export default class StudentService extends IService {
 
       const _student = await this.db.studentModel.findOne({
         email: input.email,
+        year: "2023-2024",
       });
 
       if (_student) throw new Error("Student Already Exist");

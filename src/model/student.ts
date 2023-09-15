@@ -17,7 +17,6 @@ const studentSchema = new Schema<IStudentSchema>(
       required: true,
       trim: true,
       lowercase: true,
-      unique: true,
       validate: [validateEmail, "Please fill a valid email address"],
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -31,7 +30,6 @@ const studentSchema = new Schema<IStudentSchema>(
     studentID: {
       type: SchemaTypes.String,
       required: true,
-      unique: true,
     },
     level: {
       type: SchemaTypes.Number,
