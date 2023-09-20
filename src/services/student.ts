@@ -12,8 +12,7 @@ export default class StudentService extends IService {
       if (!user) throw new Error("Unauthorized");
 
       const _student = await this.db.studentModel.findOne({
-        email: input.email,
-        year: "2023-2024",
+        studentID: input.studentID,
       });
 
       if (_student) throw new Error("Student Already Exist");
@@ -26,6 +25,7 @@ export default class StudentService extends IService {
       await student.save({ session });
       return student;
     } catch (e) {
+      console.log(e);
       throw e;
     }
   }
