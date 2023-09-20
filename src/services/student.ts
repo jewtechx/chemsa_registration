@@ -81,8 +81,6 @@ export default class StudentService extends IService {
         sort: { createdAt: "asc" },
       });
 
-      console.log("Generated Query:", JSON.stringify(generatedQuery, null, 2));
-
       const student = this.db.studentModel
         .find(generatedQuery.filter)
         .sort(generatedQuery.sort)
