@@ -18,8 +18,8 @@ export default gql`
   }
 
   enum SearchOperatorOption {
-    CaseInsensitive
-    MultiLine
+    i
+    m
   }
 
   input SearchOperator {
