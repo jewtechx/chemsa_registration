@@ -136,22 +136,79 @@ export default class registrationService extends IService {
         sort: { createdAt: "asc" },
       });
 
-      console.log(generatedQuery.filter);
+      function clearRegex(obj) {
+        for (const key in obj) {
+          if (typeof obj[key] === "object") {
+            clearRegex(obj[key]); // Recursively process nested objects
+          } else if (key === "$regex") {
+            obj[key] = ""; // Set $regex to an empty string
+          }
+        }
+      }
+
+      // Deep copy of the generatedQuery
+      const modifiedQuery = JSON.parse(JSON.stringify(generatedQuery));
+
+      // Clear all $regex properties in the modifiedQuery
+      clearRegex(modifiedQuery);
+      console.log(JSON.stringify(modifiedQuery.filter));
+      console.log(JSON.stringify(generatedQuery.filter));
+
+      const aggregatepipeline = [
+        { $match: modifiedQuery.filter },
+        {
+          $lookup: {
+            from: "students",
+            localField: "student",
+            foreignField: "_id",
+            as: "student",
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "createdBy",
+            foreignField: "_id",
+            as: "createdBy",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            registrationDetails: 1,
+            student: {
+              $arrayElemAt: ["$student", 0],
+            },
+            year: 1,
+            createdAt: 1,
+            createdBy: { $arrayElemAt: ["$createdBy", 0] },
+
+            updatedAt: 1,
+          },
+        },
+        { $match: generatedQuery.filter },
+        // {$sort : {"createdAt" : 1}}
+      ];
 
       const registration = await this.db.registrationModel
-        .find(generatedQuery.filter)
-        .sort(generatedQuery.sort)
+        .aggregate(aggregatepipeline)
         .skip(generatedQuery.skip)
         .limit(generatedQuery.limit)
-        .populate(generatedQuery.populate)
         .exec();
+
+      const registrationCount = await this.db.registrationModel.countDocuments(
+        generatedQuery.filter
+      );
 
       if (!registration) {
         throw new Error("registration Not Found");
       }
-      console.log(registration);
+      console.log(new Date(), registration);
 
-      return registration;
+      return {
+        registration,
+        registrationCount,
+      };
     } catch (e) {
       throw e;
     }

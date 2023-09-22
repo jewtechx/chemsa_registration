@@ -59,6 +59,11 @@ const typeDefs = gql`
     updatedBy: User
   }
 
+  type RegistrationQuery {
+    registration: [Registration]
+    registrationCount: Int
+  }
+
   input CreateRegistrationInput {
     student: CreateStudentInput!
     registrationDetails: RegistrationDetails!
@@ -86,7 +91,7 @@ const typeDefs = gql`
       search: SearchOperator
       populate: [String]
       pagination: Pagination!
-    ): [Registration]
+    ): RegistrationQuery
   }
 
   extend type Mutation {

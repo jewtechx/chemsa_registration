@@ -17,7 +17,7 @@ const typeDefs = gql`
       search: SearchOperator
       populate: [String]
       pagination: Pagination!
-    ): [Student]
+    ): StudentQuery
     CountLevel100(filter: StudentFilter!): Int
     CountLevel200(filter: StudentFilter!): Int
     CountLevel300(filter: StudentFilter!): Int
@@ -36,6 +36,11 @@ const typeDefs = gql`
     studentID: String!
     programme: String!
     level: Int!
+  }
+
+  type StudentQuery {
+    students: [Student]
+    studentCount: Int
   }
 
   input CreateStudentInput {

@@ -81,18 +81,26 @@ export default class StudentService extends IService {
         sort: { createdAt: "asc" },
       });
 
-      const student = this.db.studentModel
+      const students = this.db.studentModel
         .find(generatedQuery.filter)
         .sort(generatedQuery.sort)
         .skip(generatedQuery.skip)
         .limit(generatedQuery.limit)
-        .populate(generatedQuery.populate);
+        .populate(generatedQuery.populate)
+        .exec();
 
-      if (!student) {
-        throw new Error("student Not Found");
+      const studentCount = await this.db.studentModel.countDocuments(
+        generatedQuery.filter
+      );
+
+      if (!students) {
+        throw new Error("students Not Found");
       }
 
-      return student;
+      return {
+        students,
+        studentCount,
+      };
     } catch (e) {
       throw e;
     }
