@@ -23,8 +23,11 @@ const UserSchema = new Schema<IUserSchema>(
       enum: [
         "PRESIDENT",
         "VICE_PRESIDENT",
-        "GEN_SEC",
-        "ORGANIZING_SEC",
+        "GENERAL_SECRETARY",
+        "ASSISTANT_GENERAL_SECRETARY",
+        "FINANCIAL_SECRETARY",
+        "ORGANIZING_SECRETARY",
+        "PATRON",
         "SUDO_ADMIN",
       ],
     },
