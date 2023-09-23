@@ -14,6 +14,7 @@ const typeDefs = gql`
   enum souvenierStatus {
     COLLECTED_ALL
     COLLECTED_SOME
+    NULL
   }
 
   input RegistrationFilter {
