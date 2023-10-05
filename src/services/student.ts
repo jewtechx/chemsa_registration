@@ -78,7 +78,7 @@ export default class StudentService extends IService {
         search,
         populate: populate,
         pagination,
-        sort: { createdAt: "asc" },
+        sort: { level: "desc" },
       });
 
       const students = this.db.studentModel
@@ -139,7 +139,7 @@ export default class StudentService extends IService {
 
       const count = await this.db.studentModel.countDocuments({
         year: filter.year.eq,
-        level: 100,
+        level: "100",
       });
 
       return count;
@@ -154,7 +154,7 @@ export default class StudentService extends IService {
 
       const count = await this.db.studentModel.countDocuments({
         year: filter.year.eq,
-        level: 200,
+        level: "200",
       });
 
       return count;
@@ -169,7 +169,7 @@ export default class StudentService extends IService {
 
       const count = await this.db.studentModel.countDocuments({
         year: filter.year.eq,
-        level: 300,
+        level: "300",
       });
 
       return count;
@@ -184,7 +184,7 @@ export default class StudentService extends IService {
 
       const count = await this.db.studentModel.countDocuments({
         year: filter.year.eq,
-        level: 400,
+        level: "400",
       });
 
       return count;

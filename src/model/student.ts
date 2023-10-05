@@ -32,7 +32,7 @@ const studentSchema = new Schema<IStudentSchema>(
       required: true,
     },
     level: {
-      type: SchemaTypes.Number,
+      type: SchemaTypes.String,
       required: true,
     },
     phone: {

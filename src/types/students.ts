@@ -7,7 +7,7 @@ export interface IStudent {
   email: string;
   studentID: string;
   programme: string;
-  level: number;
+  level: string;
   phone: string;
   year: string;
   createdBy: PopulatedDoc<IUser>;

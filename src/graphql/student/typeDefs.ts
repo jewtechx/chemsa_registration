@@ -35,7 +35,7 @@ const typeDefs = gql`
     phone: String!
     studentID: String!
     programme: String!
-    level: Int!
+    level: String!
   }
 
   type StudentQuery {
@@ -49,7 +49,7 @@ const typeDefs = gql`
     phone: String!
     studentID: String!
     programme: String!
-    level: Int!
+    level: String!
   }
 
   input UpdateStudentInput {
@@ -59,7 +59,7 @@ const typeDefs = gql`
     fullName: String
     phone: String
     programme: String
-    level: Int
+    level: String
   }
 `;
 
