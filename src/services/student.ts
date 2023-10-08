@@ -78,7 +78,7 @@ export default class StudentService extends IService {
         search,
         populate: populate,
         pagination,
-        sort: { level: "desc" },
+        sort: { createdAt: "desc" },
       });
 
       const students = this.db.studentModel

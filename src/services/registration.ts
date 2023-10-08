@@ -133,7 +133,7 @@ export default class registrationService extends IService {
         search,
         populate,
         pagination,
-        sort: { createdAt: "asc" },
+        sort: { createdAt: "desc" },
       });
 
       function clearRegex(obj) {
