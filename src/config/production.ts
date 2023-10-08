@@ -5,7 +5,7 @@ import { Config } from ".";
 const config: Config = {
   app: {
     name: "PHYSAG-UG",
-    port: process.env.PORT,
+    port: process.env.PORT || 8080,
     env: "production",
   },
   auth: {
