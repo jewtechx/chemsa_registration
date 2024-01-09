@@ -11,7 +11,11 @@ export interface IRegistration {
     paymentMethod: string;
     balance: string;
     souveniersCollected: string[];
-    souveniersStatus: "COLLECTED_ALL" | "COLLECTED_SOME" | "NULL";
+    souveniersStatus:
+      | "COLLECTED_ALL"
+      | "COLLECTED_SOME"
+      | "NULL"
+      | "NOT_COLLECTED";
   };
   year: string;
   createdBy: Types.ObjectId;

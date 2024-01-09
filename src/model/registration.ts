@@ -42,7 +42,7 @@ const registrationSchema = new Schema<IRegistrationSchema>(
         },
         souveniersStatus: {
           type: SchemaTypes.String,
-          enum: ["COLLECTED_ALL", "COLLECTED_SOME", "NULL"],
+          enum: ["COLLECTED_ALL", "COLLECTED_SOME", "NULL", "NOT_COLLECTED"],
           required: true,
         },
       }),

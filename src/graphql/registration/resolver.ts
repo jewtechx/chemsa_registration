@@ -18,6 +18,30 @@ export default function (appContext: IAppContext) {
         );
         return registration;
       },
+      getCollectedAllCount: async (_, args, context, info) => {
+        const count =
+          await appContext.services.registration.getCollectedAllCount(
+            { ...args },
+            { ...context }
+          );
+        return count;
+      },
+      getCollectedSomeCount: async (_, args, context, info) => {
+        const count =
+          await appContext.services.registration.getCollectedSomeCount(
+            { ...args },
+            { ...context }
+          );
+        return count;
+      },
+      getCollectedNoneCount: async (_, args, context, info) => {
+        const count =
+          await appContext.services.registration.getCollectedNoneCount(
+            { ...args },
+            { ...context }
+          );
+        return count;
+      },
     },
     Mutation: {
       createRegistration: async (_, args, context, info) => {

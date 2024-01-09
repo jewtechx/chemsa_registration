@@ -5,6 +5,8 @@ export const setContext = async ({ req }) => {
   try {
     const token = req.headers.authorization || "";
 
+    console.log(token);
+
     if (token) {
       const decoded = verifyAccessToken(token);
 

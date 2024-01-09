@@ -243,4 +243,51 @@ export default class registrationService extends IService {
       throw e;
     }
   }
+
+  async getCollectedAllCount(_, { user }) {
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const registration = await this.db.registrationModel.countDocuments({
+        "registrationDetails.souveniersStatus": "COLLECTED_ALL",
+      });
+
+      console.log(registration);
+
+      return registration;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async getCollectedNoneCount(_, { user }) {
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const registration = await this.db.registrationModel.countDocuments({
+        "registrationDetails.souveniersStatus": "NOT_COLLECTED",
+      });
+
+      console.log(registration);
+
+      return registration;
+    } catch (e) {
+      throw e;
+    }
+  }
+  async getCollectedSomeCount(_, { user }) {
+    try {
+      if (!user) throw new Error("Unauthorized");
+
+      const registration = await this.db.registrationModel.countDocuments({
+        "registrationDetails.souveniersStatus": "COLLECTED_SOME",
+      });
+
+      console.log(registration);
+
+      return registration;
+    } catch (e) {
+      throw e;
+    }
+  }
 }

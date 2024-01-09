@@ -18,7 +18,6 @@ export const _generateToken = (user: IUserSchema) => {
 };
 export const verifyAccessToken = (token: string) => {
   try {
-
     if (!token) {
       throw new GraphQLError("No token", {
         extensions: {
@@ -33,7 +32,7 @@ export const verifyAccessToken = (token: string) => {
       process.env.JWT_SECRET!,
       function (err: any, tokenData: any) {
         if (err) {
-          throw new GraphQLError("Token expired", {
+          throw new GraphQLError(err.message, {
             extensions: {
               code: "UNAUTHENTICATED",
             },
@@ -45,11 +44,10 @@ export const verifyAccessToken = (token: string) => {
 
     return decoded;
   } catch (err) {
-    throw new GraphQLError("Invalid access token", {
+    throw new GraphQLError(err.message, {
       extensions: {
         code: "UNAUTHENTICATED",
       },
     });
   }
 };
-

@@ -15,6 +15,7 @@ const typeDefs = gql`
     COLLECTED_ALL
     COLLECTED_SOME
     NULL
+    NOT_COLLECTED
   }
 
   input RegistrationFilter {
@@ -93,6 +94,9 @@ const typeDefs = gql`
       populate: [String]
       pagination: Pagination!
     ): RegistrationQuery
+    getCollectedAllCount: Int
+    getCollectedSomeCount: Int
+    getCollectedNoneCount: Int
   }
 
   extend type Mutation {
