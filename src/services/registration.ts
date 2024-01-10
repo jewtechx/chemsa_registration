@@ -9,6 +9,7 @@ import {
 import { sendEmail } from "../utils/email";
 import { formatDate } from "../utils/formatDate";
 import { __generateQuery } from "../utils/query";
+import sendSMS from "../utils/sms";
 
 export default class registrationService extends IService {
   constructor(context: IAppContext) {
@@ -64,6 +65,11 @@ export default class registrationService extends IService {
       const formattedDate = formatDate();
 
       console.log(formattedDate);
+
+      sendSMS(
+        populatedResponse.student.phone,
+        `Hello ${populatedResponse.student.fullName}, your registration has been successful. Please check your email for your receipt.`
+      );
 
       await sendEmail(
         populatedResponse.student.email,
