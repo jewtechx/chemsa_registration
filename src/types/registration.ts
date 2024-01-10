@@ -36,7 +36,17 @@ export interface populatedRegistration {
 
 export interface IUpdateRegistrationDetailsInput {
   registrationId: Types.ObjectId;
-  registrationDetails: IRegistration["registrationDetails"];
+  type: "REG_ONLY" | "REG_AND_SOUVENIERS";
+  souveniers: string[];
+  amount: string;
+  paymentMethod: string;
+  balance: string;
+  souveniersCollected: string[];
+  souveniersStatus:
+    | "COLLECTED_ALL"
+    | "COLLECTED_SOME"
+    | "NULL"
+    | "NOT_COLLECTED";
 }
 
 export interface ICreateRegistrationInput {

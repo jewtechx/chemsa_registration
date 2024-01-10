@@ -19,21 +19,33 @@ export default class registrationService extends IService {
     try {
       if (!user) throw new Error("Unauthorized");
 
-      console.log("Registration Input: " + JSON.stringify(input));
+      console.log("Registration Input: ", input);
       let souveniersStatus;
-      let isAllCollected;
 
-      if (input.registrationDetails.type === "REG_AND_SOUVENIERS") {
-        isAllCollected =
-          input.registrationDetails.souveniers.length ===
-            input.registrationDetails.souveniersCollected.length &&
-          input.registrationDetails.souveniers.every((item) =>
-            input.registrationDetails.souveniersCollected.includes(item)
-          );
-
-        souveniersStatus = isAllCollected ? "COLLECTED_ALL" : "COLLECTED_SOME";
-      } else {
-        souveniersStatus = "NULL";
+      switch (input.registrationDetails.type) {
+        case "REG_AND_SOUVENIERS":
+          if (
+            input.registrationDetails.souveniers.length ===
+              input.registrationDetails.souveniersCollected.length &&
+            input.registrationDetails.souveniers.every((item) =>
+              input.registrationDetails.souveniersCollected.includes(item)
+            )
+          ) {
+            souveniersStatus = "COLLECTED_ALL";
+          } else if (
+            input.registrationDetails.souveniersCollected.length === 0
+          ) {
+            souveniersStatus = "NOT_COLLECTED";
+          } else {
+            souveniersStatus = "COLLECTED_SOME";
+          }
+          break;
+        case "REG_ONLY":
+          souveniersStatus = "NULL";
+          break;
+        default:
+          souveniersStatus = "NULL";
+          break;
       }
 
       const registration = new this.db.registrationModel({
@@ -81,13 +93,40 @@ export default class registrationService extends IService {
       if (!user) throw new Error("Unauthorized");
       console.log(JSON.stringify(input));
 
-      const regDetail = { registrationDetails: { ...input } };
-
       const _registration = await this.db.registrationModel.findOne({
-        _id: regDetail.registrationDetails.registrationId,
+        _id: input.registrationId,
       });
 
       if (!_registration) throw new Error("Registration not found");
+
+      let souveniersStatus;
+
+      switch (input.type) {
+        case "REG_AND_SOUVENIERS":
+          if (
+            input.souveniers.length === input.souveniersCollected.length &&
+            input.souveniers.every((item) =>
+              input.souveniersCollected.includes(item)
+            )
+          ) {
+            souveniersStatus = "COLLECTED_ALL";
+          } else if (input.souveniersCollected.length === 0) {
+            souveniersStatus = "NOT_COLLECTED";
+          } else {
+            souveniersStatus = "COLLECTED_SOME";
+          }
+          break;
+        case "REG_ONLY":
+          souveniersStatus = "NULL";
+          break;
+        default:
+          souveniersStatus = "NULL";
+          break;
+      }
+
+      const regDetail = {
+        registrationDetails: { ...input, souveniersStatus: souveniersStatus },
+      };
 
       await _registration.updateOne(
         {
