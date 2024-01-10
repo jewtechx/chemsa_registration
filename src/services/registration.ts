@@ -66,8 +66,10 @@ export default class registrationService extends IService {
 
       console.log(formattedDate);
 
+      const phone = "233" + populatedResponse.student.phone.slice(1);
+
       sendSMS(
-        populatedResponse.student.phone,
+        phone,
         `Hello ${populatedResponse.student.fullName}, your registration has been successful. Please check your email for your receipt.`
       );
 
