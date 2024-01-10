@@ -34,6 +34,10 @@ export default async function start(config: Config) {
       })
     );
 
+    app.use("/health", (req, res) => {
+      res.status(200).send("All is green!!!");
+    });
+
     app.listen(config.app.port, () => {
       console.log(
         `🚀  Server ready at http://localhost:${config.app.port}/graphql`

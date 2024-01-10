@@ -8,6 +8,8 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
+    "deploy": "copilot svc deploy --name engine --env test",
+    "deploy:prod": "copilot svc deploy --name engine --env production",
     "build": "tsc -p ."
   },
   "devDependencies": {
