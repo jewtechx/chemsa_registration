@@ -16,7 +16,22 @@ const registrationSchema = new Schema<IRegistrationSchema>(
           required: true,
         },
         souveniers: {
-          type: [SchemaTypes.String],
+          type: [
+            new Schema({
+              id: {
+                type: SchemaTypes.Number,
+                required: true,
+              },
+              name: {
+                type: SchemaTypes.String,
+                required: true,
+              },
+              count: {
+                type: SchemaTypes.Number,
+                required: true,
+              },
+            }),
+          ],
           required: function () {
             return this.type === "REG_AND_SOUVENIERS";
           },
@@ -35,7 +50,22 @@ const registrationSchema = new Schema<IRegistrationSchema>(
           required: true,
         },
         souveniersCollected: {
-          type: [SchemaTypes.String],
+          type: [
+            new Schema({
+              id: {
+                type: SchemaTypes.Number,
+                required: true,
+              },
+              name: {
+                type: SchemaTypes.String,
+                required: true,
+              },
+              count: {
+                type: SchemaTypes.Number,
+                required: true,
+              },
+            }),
+          ],
           required: function () {
             return this.type === "REG_AND_SOUVENIERS";
           },

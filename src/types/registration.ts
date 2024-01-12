@@ -2,15 +2,20 @@ import { Document, Model, PopulatedDoc, Types } from "mongoose";
 import { IStudent } from "./students";
 import { IUser } from "./user";
 
+export interface ISouvenier {
+  id: number;
+  name: string;
+  count: number;
+}
 export interface IRegistration {
   student: PopulatedDoc<IStudent>;
   registrationDetails: {
     type: "REG_ONLY" | "REG_AND_SOUVENIERS";
-    souveniers: string[];
+    souveniers: ISouvenier[];
     amount: string;
     paymentMethod: string;
     balance: string;
-    souveniersCollected: string[];
+    souveniersCollected: ISouvenier[];
     souveniersStatus:
       | "COLLECTED_ALL"
       | "COLLECTED_SOME"

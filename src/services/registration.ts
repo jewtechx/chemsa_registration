@@ -3,6 +3,7 @@ import IService, { IAppContext } from "../types/app";
 import {
   ICreateRegistrationInput,
   IDeleteRegistration,
+  ISouvenier,
   IUpdateRegistrationDetailsInput,
   populatedRegistration,
 } from "../types/registration";
@@ -28,8 +29,10 @@ export default class registrationService extends IService {
           if (
             input.registrationDetails.souveniers.length ===
               input.registrationDetails.souveniersCollected.length &&
-            input.registrationDetails.souveniers.every((item) =>
-              input.registrationDetails.souveniersCollected.includes(item)
+            input.registrationDetails.souveniers.every((souv: ISouvenier) =>
+              input.registrationDetails.souveniersCollected.some(
+                (collected) => collected.name === souv.name
+              )
             )
           ) {
             souveniersStatus = "COLLECTED_ALL";
@@ -82,7 +85,7 @@ export default class registrationService extends IService {
             formattedDate,
             populatedResponse.registrationDetails.amount,
             populatedResponse.registrationDetails.amount,
-            populatedResponse.registrationDetails.amount,
+            populatedResponse.registrationDetails.balance,
             populatedResponse.registrationDetails.type
           ),
           text: "",

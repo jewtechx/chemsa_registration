@@ -23,33 +23,45 @@ const typeDefs = gql`
     year: StringOperator
   }
 
+  type Souvenier {
+    id: Int
+    name: String
+    count: Int
+  }
+
+  input SouvenierInput {
+    id: Int
+    name: String
+    count: Int
+  }
+
   type registrationDetails {
     type: RegistrationType
-    souveniers: [String]
+    souveniers: [Souvenier]
     amount: String
     paymentMethod: paymentMethod
     balance: String
-    souveniersCollected: [String]
+    souveniersCollected: [Souvenier]
     souveniersStatus: souvenierStatus
   }
 
   input RegistrationDetails {
     type: RegistrationType!
-    souveniers: [String]
+    souveniers: [SouvenierInput!]
     amount: String!
     paymentMethod: paymentMethod!
     balance: String!
-    souveniersCollected: [String]
+    souveniersCollected: [SouvenierInput!]
   }
 
   input UpdateRegistrationDetails {
     registrationId: ID!
     type: RegistrationType
-    souveniers: [String]
+    souveniers: [SouvenierInput]
     amount: String
     paymentMethod: paymentMethod
     balance: String
-    souveniersCollected: [String]
+    souveniersCollected: [SouvenierInput]
   }
 
   type Registration @key(fields: "_id") {
