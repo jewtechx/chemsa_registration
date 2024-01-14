@@ -15,4 +15,6 @@ EXPOSE 80
 
 COPY . .
 
-CMD yarn run dev --bind 0.0.0.0:$PORT
+RUN  yarn run build
+
+CMD yarn start --bind 0.0.0.0:$PORT
