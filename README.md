@@ -34,7 +34,7 @@ Status
 
 
 
-Made with :heart: by <a href="https://github.com/Manuel2u" target="_blank">Manuel_Dev</a>
+Made with :heart: by <a href="https://github.com/jewtechx" target="_blank">Jew</a>
 
 &#xa0;
 
