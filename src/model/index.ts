@@ -1,13 +1,9 @@
 import { connect } from "mongoose";
 import { Config } from "../config";
 import userModel from "./user";
-import studentModel from "./student";
-import registrationModel from "./registration";
 
 export interface IDb {
   userModel: typeof userModel;
-  studentModel: typeof studentModel;
-  registrationModel: typeof registrationModel;
 }
 
 export default async function initDB(config: Config["db"]): Promise<IDb> {
@@ -16,13 +12,9 @@ export default async function initDB(config: Config["db"]): Promise<IDb> {
     console.log("DB connected");
 
     await userModel.createCollection();
-    await studentModel.createCollection();
-    await registrationModel.createCollection();
 
     return {
-      userModel,
-      studentModel,
-      registrationModel,
+      userModel
     };
   } catch (e) {
     throw e;

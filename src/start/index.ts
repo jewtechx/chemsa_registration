@@ -11,8 +11,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import initServices from "../services";
 import initDb from "../model";
 import { setContext } from "../middlewares/context";
-import { GraphQLError } from "graphql";
-import { verifyAccessToken } from "../utils/token";
+
 
 export default async function start(config: Config) {
   try {
