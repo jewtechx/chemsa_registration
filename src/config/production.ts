@@ -13,7 +13,7 @@ const config: Config = {
     token_expiry: process.env.TOKEN_EXPIRY,
   },
   db: {
-    uri: process.env.DEV_MONGO_URI,
+    uri: process.env.PROD_MONGO_URI,
   },
   mail: {
     username: process.env.MAILGUN_USERNAME || "",
