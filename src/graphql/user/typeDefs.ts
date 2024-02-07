@@ -2,7 +2,7 @@ import { gql } from "graphql-tag";
 
 const typeDefs = gql`
   extend type Query {
-    user(id: ID!): User
+    user : User
   }
 
   enum Role {
@@ -35,13 +35,13 @@ const typeDefs = gql`
     userId: ID!
   }
 
-  input CreateUserInput {
-    fullname: String!
-    email: String!
-    phone: String!
-    password: String!
-    role: Role!
-  }
+    input CreateUserInput {
+      fullname: String!
+      email: String!
+      phone: String!
+      password: String!
+      role: Role!
+    }
 
   input UpdateUserInput {
     fullname: String

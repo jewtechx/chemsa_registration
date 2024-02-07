@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+    
 import jwt from "jsonwebtoken";
 import config from "../config";
 import { GraphQLError } from "graphql";
@@ -17,11 +17,12 @@ export const _generateToken = (user: IUserSchema) => {
   }
 };
 export const verifyAccessToken = (token: string) => {
+  console.log(token)
   try {
     if (!token) {
       throw new GraphQLError("No token", {
         extensions: {
-          code: "UNAUTHENTICATED",
+          code: "UNAUTHENTICATED - NO TOKEN",
         },
       });
     }
@@ -29,12 +30,12 @@ export const verifyAccessToken = (token: string) => {
     let decoded;
     jwt.verify(
       token,
-      process.env.JWT_SECRET!,
+      process.env.JWT_SECRET,
       function (err: any, tokenData: any) {
         if (err) {
           throw new GraphQLError(err.message, {
             extensions: {
-              code: "UNAUTHENTICATED",
+              code: "UNAUTHENTICATED - TOKEN MALFORMED",
             },
           });
         }

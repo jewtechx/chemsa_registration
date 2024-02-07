@@ -10,13 +10,14 @@ export default function (appContext: IAppContext){
         Query: {
             user: async function (_:any, { }, context:any, info:any) {
                 try {
+                  console.log(context)
                     const user = await appContext.services.user.getOne(context.user._id, {
                         ...context
                     })
 
                     return user
                 }catch(e) {
-                    throw new Error("Failed to fetch user")
+                    throw e
                 }
             }
         },
@@ -48,6 +49,7 @@ export default function (appContext: IAppContext){
                     {...args},
                     {...context}
                 )
+                return user
             }
         }      
 }

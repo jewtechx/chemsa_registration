@@ -6,6 +6,7 @@ import { IAppContext } from "../types/app";
 import rootSchema from "./root";
 import { formatError } from "../middlewares/error";
 import userSchema from "./user";
+import studentSchema from "./student";
 
 interface MyContext {
   token?: String;
@@ -15,7 +16,8 @@ interface MyContext {
 export default function initGraph(appContext: IAppContext): ApolloServer {
   const schema = buildSubgraphSchema([
     rootSchema(appContext),
-    userSchema(appContext)
+    userSchema(appContext),
+    studentSchema(appContext)
   ]);
 
   const graph = new ApolloServer<MyContext>({

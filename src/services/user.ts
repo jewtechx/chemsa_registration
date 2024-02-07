@@ -53,17 +53,18 @@ export default class UserService extends IService {
   }
 
   // get user
-  async getOne(id, {context}:{context: any}):Promise<IUser> {
+  async getOne(id:any, {user}:{user: any}):Promise<IUser> {
+
     try{
-      if(!context.user){
+      if(!user){
         throw new Error("Not Authenticated");
       }
 
-      const user = await this.db.userModel.findOne({_id:id});
+      const _user = await this.db.userModel.findById(id);
 
-      if(!user) throw new Error("User not found");
+      if(!_user) throw new Error("User not found");
 
-      return user
+      return _user
     }catch(e){
       throw e
     }
@@ -89,11 +90,12 @@ export default class UserService extends IService {
   }
 
   // delete user
-  async deleteOne({input}, {user}):Promise<IUser> {
+  async deleteOne({userId}, {user}):Promise<IUser> {
+    console.log(userId)
     try {
       if(!user) throw new Error("Unauthorized");
 
-      const _user = await this.db.userModel.findByIdAndDelete(input.userId);
+      const _user = await this.db.userModel.findByIdAndDelete(userId);
 
       if(!_user) throw new Error("User not found");
       return _user;
